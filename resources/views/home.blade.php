@@ -3,30 +3,7 @@
 
 @endsection
 @section('body')
-    <div class="card">
-        <div style="padding: 20px">
-            <table id="myTable" class="table table-striped table-bordered">
-                <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>น้ำหนัก</th>
-                    <th>ส่วนสูง</th>
-                    <th>ค่า BMI</th>
-                    <th>เวลา</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="(list,key) in user_bmi">
-                    <td>@{{ key+1 }}</td>
-                    <td>@{{ list.weight }}</td>
-                    <td>@{{ list.height }}</td>
-                    <td>@{{ list.bmi }}</td>
-                    <td>@{{ list.time_update }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <example-component></example-component>
 @endsection
 @section('script')
     <script>

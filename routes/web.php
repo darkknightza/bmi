@@ -32,6 +32,8 @@ Route::middleware('auth:web')->group(function () {
     Route::get('get_location_list','BMIController@getAllLocation');
     Route::get('get_bmi_user','BMIController@getBmiUser');
     Route::get('get_static_overview','BMIController@getStaticOverview');
+    Route::get('get_chart_bmi','BMIController@getChartBMI');
+    Route::post('save_board','BMIController@SaveBoard');
 });
 
 
