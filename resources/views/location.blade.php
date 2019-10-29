@@ -4,9 +4,11 @@
 @endsection
 @section('body')
     <div class="card" v-if="table_location">
+        @if(Auth::User()->user_type_id==1)
         <div align="right" style="padding-right: 30px">
             <button class="btn btn-primary" @click="AddLocation">เพิ่มที่ตั้ง</button>
         </div>
+        @endif
         <div style="padding: 20px">
             <table id="myTable" class="table table-striped table-bordered">
                 <thead>
