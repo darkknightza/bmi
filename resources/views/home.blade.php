@@ -5,7 +5,7 @@
 @section('body')
     @if(Auth::User()->user_type_id != 1)
         <example-component></example-component>
-    @endif
+    @else
     <div style="padding: 10px">
         <label>เกณฑ์ของนักศึกษา</label>
         <table class="table table-striped table-bordered dataTable no-footer" >
@@ -81,6 +81,7 @@
             </tbody>
         </table>
     </div>
+    @endif
 @endsection
 @section('script')
     <script>
