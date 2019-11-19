@@ -1707,12 +1707,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      data_chart: []
+      data_chart: [],
+      chart: null,
+      selected: 'height'
     };
   },
   mounted: function mounted() {
@@ -1732,50 +1743,42 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     disPlayChart: function disPlayChart() {
+      if (this.chart) {
+        this.chart.destroy();
+      }
+
+      var data = [];
+      var label = '';
+
+      if (this.selected === 'height') {
+        label = 'ส่วนสูง';
+        data = this.data_chart.height;
+      } else if (this.selected === 'weight') {
+        label = 'น้ำหนัก';
+        data = this.data_chart.weight;
+      } else if (this.selected === 'bmi') {
+        label = 'BMI';
+        data = this.data_chart.bmi;
+      }
+
       var ctx = document.getElementById('lineChart').getContext('2d');
-      this.chartCandleStick = new chart_js__WEBPACK_IMPORTED_MODULE_0___default.a(ctx, {
+      this.chart = new chart_js__WEBPACK_IMPORTED_MODULE_0___default.a(ctx, {
         type: 'line',
         data: {
           labels: this.data_chart.label,
           datasets: [{
-            label: 'ส่วนสูง',
+            label: label,
             yAxisID: '111',
             fill: false,
-            borderColor: "#FFEB3B",
-            backgroundColor: "#FFEB3B",
+            borderColor: "#1a8cff",
+            backgroundColor: "#1a8cff",
             borderJoinStyle: "round",
             pointRadius: 1,
             pointHoverRadius: 5,
-            pointBackgroundColor: "#FFEB3B",
+            pointBackgroundColor: "#1a8cff",
             spanGaps: false,
             borderWidth: 2,
-            data: this.data_chart.height
-          }, {
-            yAxisID: '222',
-            label: 'น้ำหนัก',
-            fill: false,
-            borderColor: "#00BCD4",
-            backgroundColor: "#00BCD4",
-            borderJoinStyle: "round",
-            pointRadius: 1,
-            pointHoverRadius: 5,
-            pointBackgroundColor: "#00BCD4",
-            spanGaps: false,
-            borderWidth: 2,
-            data: this.data_chart.weight
-          }, {
-            yAxisID: '333',
-            label: 'BMI',
-            fill: false,
-            borderColor: "#9400D3",
-            backgroundColor: "#9400D3",
-            borderJoinStyle: "round",
-            pointRadius: 1,
-            pointHoverRadius: 5,
-            pointBackgroundColor: "#9400D3",
-            spanGaps: false,
-            borderWidth: 2,
-            data: this.data_chart.bmi
+            data: data
           }]
         },
         options: {
@@ -1814,21 +1817,7 @@ __webpack_require__.r(__webpack_exports__);
               position: "left",
               scaleLabel: {
                 "display": true,
-                "labelString": "น้ำหนัก"
-              }
-            }, {
-              id: "222",
-              position: "right",
-              scaleLabel: {
-                "display": true,
-                "labelString": "ส่วนสูง"
-              }
-            }, {
-              id: "333",
-              position: "right",
-              scaleLabel: {
-                "display": true,
-                "labelString": "BMI"
+                "labelString": label
               }
             }]
           }
@@ -70443,14 +70432,64 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "div",
+      {
+        staticClass: "row float-right",
+        staticStyle: { "padding-bottom": "20px" }
+      },
+      [
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.selected,
+                expression: "selected"
+              }
+            ],
+            on: {
+              change: [
+                function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.selected = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                },
+                _vm.disPlayChart
+              ]
+            }
+          },
+          [
+            _c("option", { attrs: { value: "height" } }, [_vm._v("ส่วนสูง")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "weight" } }, [_vm._v("น้ำหนัก")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "bmi" } }, [_vm._v("BMI")])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _vm._m(0)
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
+    return _c("div", { staticClass: "row" }, [
       _c("canvas", { attrs: { id: "lineChart", height: "450", width: "800" } })
     ])
   }

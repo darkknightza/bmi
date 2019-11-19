@@ -9,8 +9,9 @@
                 <thead>
                 <tr>
                     <th>No.</th>
-                    <th>ชื่อ-สกุล</th>
+                    <th>ประเภท</th>
                     <th>ค่า BMI</th>
+                    <th>เกณฑ์ดัชนีมวลกาย</th>
                     <th>สถานที่</th>
                     <th>ทำรายการครั้งล่าสุด</th>
                 </tr>
@@ -18,9 +19,10 @@
                 <tbody>
                 <tr v-for="(list,key) in overview_list">
                     <td>@{{ key+1 }}</td>
-                    <td>@{{ list.Fname }} @{{ list.Lname }}</td>
+                    <td>@{{ list.user_type }}</td>
                     <td>@{{ list.bmi }}</td>
-                    <td>@{{ list.board_name }} @{{ list.site_name }}</td>
+                    <td>@{{ list.criterion }}</td>
+                    <td>@{{ list.hw_name }}/@{{ list.board_name }}/@{{ list.site_name }}</td>
                     <td>@{{ list.time_update }}</td>
                 </tr>
                 </tbody>

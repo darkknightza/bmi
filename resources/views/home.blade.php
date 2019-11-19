@@ -3,14 +3,95 @@
 
 @endsection
 @section('body')
-    <example-component></example-component>
+    @if(Auth::User()->user_type_id != 1)
+        <example-component></example-component>
+    @endif
+    <div style="padding: 10px">
+        <label>เกณฑ์ของนักศึกษา</label>
+        <table class="table table-striped table-bordered dataTable no-footer" >
+            <thead>
+            <tr>
+                <th>น้ำหนักต่ำกว่าเกณฑ์</th>
+                <th>สมส่วน</th>
+                <th>น้ำหนักเกิน</th>
+                <th>โรคอ้วน</th>
+                <th>โรคอ้วนอันตราย</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>@{{ disPlay(report_1.bmi_1,report_1.count) }}</th>
+                <th>@{{ disPlay(report_1.bmi_2,report_1.count) }}</th>
+                <th>@{{ disPlay(report_1.bmi_3,report_1.count) }}</th>
+                <th>@{{ disPlay(report_1.bmi_4,report_1.count) }}</th>
+                <th>@{{ disPlay(report_1.bmi_5,report_1.count) }}</th>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <label>เกณฑ์ของบุคลากร</label>
+        <table class="table table-striped table-bordered dataTable no-footer" >
+            <thead>
+            <tr>
+                <th>น้ำหนักต่ำกว่าเกณฑ์</th>
+                <th>สมส่วน</th>
+                <th>น้ำหนักเกิน</th>
+                <th>โรคอ้วน</th>
+                <th>โรคอ้วนอันตราย</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>@{{ disPlay(report_2.bmi_1,report_2.count) }}</th>
+                <th>@{{ disPlay(report_2.bmi_2,report_2.count) }}</th>
+                <th>@{{ disPlay(report_2.bmi_3,report_2.count) }}</th>
+                <th>@{{ disPlay(report_2.bmi_4,report_2.count) }}</th>
+                <th>@{{ disPlay(report_2.bmi_5,report_2.count) }}</th>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <label>จำนวนเครื่องที่ใช้สูงสุด 5 เครื่อง</label>
+        <table class="table table-striped table-bordered dataTable no-footer" >
+            <thead>
+            <tr>
+                <th v-for="data in report_3">@{{ data.hw_name }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th v-for="data in report_3">@{{disPlay( data.count,report_3.length) }}</th>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <label>จำนวนระหว่างนักศึกษากับบุคลากร</label>
+        <table class="table table-striped table-bordered dataTable no-footer" >
+            <thead>
+            <tr>
+                <th>จำนวนนักศึกษา</th>
+                <th>จำนวนบุคลากร</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>@{{disPlay( report_4.student,report_4.count) }}</th>
+                <th>@{{disPlay( report_4.personnel,report_4.count) }}</th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 @endsection
 @section('script')
     <script>
         let app = new Vue({
             el: '#app',
             data: {
-                user_bmi: [],
+                report_1: [],
+                report_2: [],
+                report_3: [],
+                report_4: [],
+                report_5: [],
             },
             created: function () {
                 this.getLocation();
@@ -18,21 +99,27 @@
             methods: {
                 getLocation() {
                     let that = this;
-                    axios.get('{{url('/get_bmi_user')}}')
+                    axios.get('{{url('/get_report')}}')
                         .then(function (response) {
                             if (response.data.success) {
-                                that.user_bmi =response.data.data;
-                                setTimeout(function () {
-                                    $('#myTable').DataTable();
-                                }, 100);
-                            }else{
-                                $('#myTable').DataTable();
+                                that.report_1 =response.data.student;
+                                that.report_2 =response.data.personnel;
+                                that.report_3 =response.data.report_3;
+                                that.report_4 =response.data.report_4;
                             }
                         })
                         .catch(function (error) {
                             console.log(error)
                         });
                 },
+                disPlay(value,count){
+                    console.log(count)
+                    if(count === 0){
+                        return 0
+                    }else{
+                        return Math.round((value/count)*100)+'%'
+                    }
+                }
             },
         });
     </script>

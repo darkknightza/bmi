@@ -50,29 +50,46 @@
         <div class="sidebar-heading">
             Menu
         </div>
-        <li class="nav-item">
-            <a class="nav-link" href="/location">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>ที่ตั้ง BMI</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/statistic_person">
-                <i class="fas fa-fw fa-table"></i>
-                <span>สถิติรายของคุณ</span></a>
-        </li>
-        @if(Auth::User()->user_type_id==1)
-        <li class="nav-item">
-            <a class="nav-link" href="/statistic_overview">
-                <i class="fas fa-fw fa-table"></i>
-                <span>สถิติภาพรวม</span></a>
-        </li>
+        @if(Auth::User()->user_type_id != 1)
+            <li class="nav-item">
+                <a class="nav-link" href="/location">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>ที่ตั้ง BMI</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/statistic_person">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>สถิติของคุณ</span></a>
+            </li>
         @endif
-{{--        <li class="nav-item">--}}
-{{--            <a class="nav-link" href="tables.html">--}}
-{{--                <i class="fas fa-fw fa-table"></i>--}}
-{{--                <span>สถิติการใช้งาน</span></a>--}}
-{{--        </li>--}}
-        <!-- Divider -->
+        @if(Auth::User()->user_type_id == 1)
+            <li class="nav-item">
+                <a class="nav-link" href="/hardware-admin">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>ที่ตั้งเครื่อง</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/board-admin">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>ชั้น</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/site-admin">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>ตึก</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/location-admin">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>วิทยาเขต</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/statistic_overview">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>สถิติภาพรวม</span></a>
+            </li>
+        @endif
+    <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
@@ -94,11 +111,13 @@
                 <ul class="navbar-nav ml-auto">
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::User()->name }} {{ Auth::User()->lastname }}</span>
                         </a>
                         <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="#">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Profile
@@ -123,9 +142,9 @@
             </nav>
             <!-- End of Topbar -->
             <!-- Main Body -->
-                <div id="app">
-                    @yield('body')
-                </div>
+            <div id="app">
+                @yield('body')
+            </div>
             <!-- End Main Body -->
         </div>
         <!-- End of Main Content -->
