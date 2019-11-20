@@ -6,7 +6,7 @@
     @if(Auth::User()->user_type_id != 1)
         <example-component></example-component>
     @else
-    <div style="padding: 10px">
+    <div class="container" style="padding: 10px">
         <label>เกณฑ์ของนักศึกษา</label>
         <table class="table table-striped table-bordered dataTable no-footer" >
             <thead>
@@ -80,6 +80,22 @@
             </tr>
             </tbody>
         </table>
+        <br>
+        <label>จำนวนผู้ใช้ระหว่างช่วงเช้ากับช่วงบ่าย</label>
+        <table class="table table-striped table-bordered dataTable no-footer" >
+            <thead>
+            <tr>
+                <th>ตั้งแต่เวลา 00:01 - 12:00</th>
+                <th>ตั้งแต่เวลา 12:01 - 24:00</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>@{{report_5.time_00}}</th>
+                <th>@{{report_5.time_12}}</th>
+            </tr>
+            </tbody>
+        </table>
     </div>
     @endif
 @endsection
@@ -107,6 +123,7 @@
                                 that.report_2 =response.data.personnel;
                                 that.report_3 =response.data.report_3;
                                 that.report_4 =response.data.report_4;
+                                that.report_5 =response.data.report_5;
                             }
                         })
                         .catch(function (error) {

@@ -27,7 +27,31 @@ class BMIController extends Controller
         }
         return $result;
     }
-
+    public function getProfile(){
+        $user = Auth::User()->user_id;
+        $result = DB::table('user')
+            ->where('user_id',$user)
+            ->first();
+        return response([
+            'success' => true,
+            'profile' => $result
+        ]);
+    }
+    public function saveProfile(Request $request){
+        DB::table('user')
+            ->where('user_id', $request->get('user_id'))
+            ->update([
+                'name' => $request->get('name'),
+                'lastname' => $request->get('lastname'),
+                'student_id' => $request->get('student_id'),
+                'gender' => $request->get('gender'),
+                'card_id' => $request->get('card_id'),
+            ]);
+        return response([
+            'success' => true,
+            'data' => []
+        ]);
+    }
     public function getReport()
     {
         $student_report = DB::table('bmi')
@@ -97,12 +121,29 @@ class BMIController extends Controller
           'personnel' => $personnel_list_bmi['count'],
           'count' => $student_list_bmi['count']+$personnel_list_bmi['count'],
         ];
+        $time_00 = DB::table('bmi')
+            ->selectRaw('count(bmi) as count')
+            ->whereRaw('CAST(time_update as time) >= "00:00:00" AND CAST(time_update as time) <= "12:00:00"')
+            ->groupBy(['bmi'])
+            ->get();
+        $time_00 = count($time_00);
+        $time_12 = DB::table('bmi')
+            ->selectRaw('count(bmi) as count')
+            ->whereRaw('CAST(time_update as time) > "12:00:00" AND CAST(time_update as time) <= "24:00:00"')
+            ->groupBy(['bmi'])
+            ->get();
+        $time_12 = count($time_12);
+        $report_5 = [
+            'time_00' => $time_00,
+            'time_12' => $time_12,
+        ];
         return response([
             'success' => true,
             'student' => $student_list_bmi,
             'personnel' => $personnel_list_bmi,
             'report_3' => $report_3,
-            'report_4' => $report_4
+            'report_4' => $report_4,
+            'report_5' => $report_5,
         ]);
     }
 
@@ -377,8 +418,6 @@ class BMIController extends Controller
             if ($result) {
                 $data [] = [
                     'user_id' => $row->user_id,
-                    'Fname' => $row->name,
-                    'Lname' => $row->lastname,
                     'user_type' => $row->user_type_name,
                     'bmi' => $result->bmi,
                     'time_update' => $result->time_update,

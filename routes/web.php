@@ -20,6 +20,9 @@ Route::middleware('auth:web')->group(function () {
     Route::get('location', function () {
         return view('location');
     });
+    Route::get('profile', function () {
+        return view('profile');
+    });
     Route::get('location-admin', function () {
         return view('locationadmin');
     });
@@ -40,6 +43,8 @@ Route::middleware('auth:web')->group(function () {
     });
     Route::get('get_report','BMIController@getReport');
 
+    Route::get('get_profile','BMIController@getProfile');
+    Route::post('save_profile','BMIController@saveProfile');
     Route::get('get_status','BMIController@getStatus');
     Route::get('get_hw/{id}','BMIController@getHwById');
     Route::post('save_hw','BMIController@SaveHW');
