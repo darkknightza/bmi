@@ -1,11 +1,13 @@
 <template>
     <div class="container">
-        <div class="row float-right" style="padding-bottom: 20px">
-            <select v-model="selected" @change="disPlayChart">
-                <option value="height">ส่วนสูง</option>
-                <option value="weight">น้ำหนัก</option>
-                <option value="bmi">BMI</option>
-            </select>
+        <div class="row">
+            <div style="padding-bottom: 20px;padding-left: 30px">
+                <select class="form-control" v-model="selected" @change="disPlayChart">
+                    <option value="height">ส่วนสูง</option>
+                    <option value="weight">น้ำหนัก</option>
+                    <option value="bmi">BMI</option>
+                </select>
+            </div>
         </div>
         <div class="row">
             <canvas id="lineChart" height="450" width="800"></canvas>

@@ -1716,6 +1716,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -70433,53 +70435,53 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c(
-      "div",
-      {
-        staticClass: "row float-right",
-        staticStyle: { "padding-bottom": "20px" }
-      },
-      [
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.selected,
-                expression: "selected"
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticStyle: { "padding-bottom": "20px", "padding-left": "30px" } },
+        [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selected,
+                  expression: "selected"
+                }
+              ],
+              staticClass: "form-control",
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.selected = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  _vm.disPlayChart
+                ]
               }
-            ],
-            on: {
-              change: [
-                function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.selected = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                },
-                _vm.disPlayChart
-              ]
-            }
-          },
-          [
-            _c("option", { attrs: { value: "height" } }, [_vm._v("ส่วนสูง")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "weight" } }, [_vm._v("น้ำหนัก")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "bmi" } }, [_vm._v("BMI")])
-          ]
-        )
-      ]
-    ),
+            },
+            [
+              _c("option", { attrs: { value: "height" } }, [_vm._v("ส่วนสูง")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "weight" } }, [_vm._v("น้ำหนัก")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "bmi" } }, [_vm._v("BMI")])
+            ]
+          )
+        ]
+      )
+    ]),
     _vm._v(" "),
     _vm._m(0)
   ])
