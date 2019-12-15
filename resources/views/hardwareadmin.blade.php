@@ -61,21 +61,37 @@
                                     @csrf
                                     <div class="form-group">
                                         <label>ชื่อที่ตั้ง </label>
-                                        <input type="text" class="form-control" placeholder="ชื่อที่ตั้ง"
+                                        <input ref="hw_name" type="text" class="form-control" placeholder="เลือกชั้น"
                                                v-model="location.hw_name">
                                     </div>
                                     <div class="form-group">
+                                        <label>วิทยาเขต</label>
+                                        <select class="form-control" v-model="location_id" @change="onChangLocation('location')">
+                                            <option :value="null" disabled>-เลือกวิทยาเขต-</option>
+                                            <option v-for="data in locations_list" :value="data.location_id">@{{ data.location_name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label>ตึก</label>
-                                        <select class="form-control" v-model="location.board_id">
-                                            <option value="" disabled>เลือกชั้น</option>
-                                            <option v-for="data in boards" :value="data.board_id">@{{ data.board_name }}
+                                        <select class="form-control" v-model="site_id" @change="onChangLocation('site')">
+                                            <option :value="null" disabled>-เลือกตึก-</option>
+                                            <option v-if="data.location_id === location_id" v-for="data in sites" :value="data.site_id">@{{ data.site_name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>ชั้น</label>
+                                        <select ref="board_id" class="form-control" v-model="location.board_id">
+                                            <option :value="null" disabled>-เลือกชั้น-</option>
+                                            <option v-if="data.site_id === site_id" v-for="data in boards" :value="data.board_id">@{{ data.board_name }}
                                             </option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>สถานะ</label>
-                                        <select class="form-control" v-model="location.status_id">
-                                            <option value="" disabled>เลือกสถานะ</option>
+                                        <select ref="status_id" class="form-control" v-model="location.status_id">
+                                            <option :value="null" disabled>-เลือกสถานะ-</option>
                                             <option v-for="data in status_list" :value="data.status_id">@{{
                                                 data.status_name }}
                                             </option>
@@ -85,7 +101,7 @@
                                         <button type="button" class="btn btn-danger btn-user" @click="toggle_location">
                                             ยกเลิก
                                         </button>
-                                        <button type="button" class="btn btn-success btn-user" @click="SaveLocation">
+                                        <button type="button" class="btn btn-success btn-user" @click="SaveHw">
                                             บันทึก
                                         </button>
                                     </div>
@@ -109,21 +125,23 @@
                 show_edit_location: false,
                 status_list: [],
                 location: [],
-                site_id: '',
-                status_id: '',
-                board_name: '',
-                board_id: '',
+                site_id: null,
+                board_id: null,
+                location_id: null,
                 list_key_status: [],
-                boards: []
+                boards: [],
+                locations_list: [],
+                sites: [],
             },
             created: function () {
-                this.getLocation();
+                this.getLocationLists();
                 this.all_status();
                 this.getBoard();
+                this.getSite();
+                this.getLocation();
             },
             methods: {
-
-                getLocation() {
+                getLocationLists() {
                     let that = this;
                     axios.get('{{url('/get_location_user')}}')
                         .then(function (response) {
@@ -148,6 +166,10 @@
                             if (response.data.success) {
                                 data = response.data.data;
                                 that.location = data;
+                                that.site_id = data.site_id;
+                                that.board_id = data.board_id;
+                                that.location_id = data.location_id;
+
                             }
                         })
                         .catch(function (error) {
@@ -158,13 +180,24 @@
                     this.show_edit_location = true;
                     this.table_location = false;
                     this.location = {
-                        hw_name: '',
-                        board_id: '',
+                        hw_name: null,
+                        board_id: null,
                         hw_id: null,
-                        status_id: ''
+                        status_id: null
                     }
                 },
-                SaveLocation() {
+                SaveHw() {
+                    if(!this.location.hw_name){
+                        this.$refs.hw_name.focus()
+                        return
+                    }else if(!this.location.board_id){
+                        this.$refs.board_id.focus()
+                        return
+                    }else if(!this.location.status_id){
+                        this.$refs.status_id.focus()
+                        return
+                    }
+
                     let that = this;
                     axios.post('{{url('/save_hw')}}', this.location)
                         .then(function (response) {
@@ -189,7 +222,7 @@
                             console.log(error)
                         });
                 },
-                getBoard(){
+                getBoard() {
                     let that = this;
                     axios.get('{{url('/get_board_admin')}}')
                         .then(function (response) {
@@ -201,10 +234,42 @@
                             console.log(error)
                         });
                 },
+                getSite() {
+                    let that = this;
+                    axios.get('{{url('/get_site_list')}}')
+                        .then(function (response) {
+                            if (response.data.success) {
+                                that.sites = response.data.site;
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error)
+                        });
+                },
+                getLocation() {
+                    let that = this;
+                    axios.get('{{url('/get_location_list')}}')
+                        .then(function (response) {
+                            if (response.data.success) {
+                                that.locations_list = response.data.locations;
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error)
+                        });
+                },
                 toggle_location() {
                     this.getLocation();
                     this.show_edit_location = false;
                     this.table_location = true;
+                },
+                onChangLocation(txt){
+                    if (txt === 'location') {
+                        this.site_id = null
+                        this.location.board_id = null
+                    }else if(txt === 'site'){
+                        this.location.board_id = null
+                    }
                 }
             },
         });

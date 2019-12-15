@@ -105,7 +105,7 @@
             },
             created: function () {
                 this.getSite();
-                this.all_location_status();
+                this.getLocation();
             },
             methods: {
                 getSite() {
@@ -164,7 +164,7 @@
                             console.log(error)
                         });
                 },
-                all_location_status() {
+                getLocation() {
                     let that = this;
                     axios.get('{{url('/get_location_list')}}')
                         .then(function (response) {

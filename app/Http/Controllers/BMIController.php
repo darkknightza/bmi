@@ -388,7 +388,10 @@ class BMIController extends Controller
 
     public function getHwById($id)
     {
-        $result = DB::table('hardware')
+        $result = DB::table('site')
+            ->join('board', 'board.site_id', '=', 'site.site_id')
+            ->join('location', 'location.location_id', '=', 'site.location_id')
+            ->join('hardware', 'hardware.board_id', '=', 'board.board_id')
             ->where('hw_id', $id)
             ->first();
         return response([

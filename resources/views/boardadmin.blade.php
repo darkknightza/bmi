@@ -102,7 +102,7 @@
         },
         created: function () {
           this.getLocation();
-          this.all_location_status();
+          this.getSite();
         },
         methods: {
 
@@ -159,7 +159,7 @@
                 console.log(error)
               });
           },
-          all_location_status() {
+          getSite() {
             let that = this;
             axios.get('{{url('/get_site_list')}}')
               .then(function (response) {
