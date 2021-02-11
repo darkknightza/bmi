@@ -11,8 +11,14 @@
 |
 */
 
+Route::get('login', 'AuthController@showLogin')->name('login');
+Route::post('login', 'AuthController@login');
+
 
 Route::middleware('auth:web')->group(function () {
+
+    Route::post('logout', 'AuthController@logout')->name('logout');
+
     Route::get('/', function () {
         return view('home');
     });
@@ -74,7 +80,3 @@ Route::middleware('auth:web')->group(function () {
     Route::get('get_chart_bmi','BMIController@getChartBMI');
 });
 
-
-Route::post('/login', 'Auth\LoginController@login');
-Route::get('/login', 'Auth\LoginController@showLoginForm');
-Route::get('/logout', 'Auth\LoginController@logout');

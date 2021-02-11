@@ -128,13 +128,12 @@
 {{--                            </a>--}}
 {{--                          --}}
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/logout">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
-                            </a>
+                                <a class="dropdown-item" href="javascript:" onclick="onLogout()">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
                         </div>
                     </li>
-
                 </ul>
             </nav>
             <!-- End of Topbar -->
@@ -155,7 +154,14 @@
     <i class="fas fa-angle-up"></i>
 </a>
 <!-- Logout Modal-->
-
+<form id="form-logout" action="{{route('logout')}}" method="post">
+    @csrf
+</form>
+<script>
+   function onLogout(){
+       $('#form-logout').submit()
+   }
+</script>
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 <!-- Bootstrap core JavaScript-->
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
@@ -166,6 +172,7 @@
 <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 @yield('script')
-</body>
 
+
+</body>
 </html>
