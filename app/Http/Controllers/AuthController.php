@@ -31,7 +31,7 @@ class AuthController extends Controller
         if ($user) {
             if (Hash::check($password, $user->password)) {
                 auth('web')->login($user, $remember);
-                return redirect()->intended('/home');
+                return redirect()->intended('/');
             }
         }
         return back()->withInput($request->only('username', 'remember'))

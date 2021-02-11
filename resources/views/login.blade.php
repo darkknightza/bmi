@@ -40,11 +40,21 @@
                                 <form action="{{ url('login') }}" method="post"  class="user">
                                     @csrf
                                     <div class="form-group">
-                                        <input type="text" name="username" class="form-control form-control-user"  aria-describedby="emailHelp" placeholder="รหัสนักศึกษา">
+                                        <input type="text" name="username"
+                                               class="form-control form-control-user"
+                                               value="{{ old('username') }}"
+                                               aria-describedby="emailHelp" placeholder="รหัสนักศึกษา">
                                     </div>
                                     <div class="form-group">
                                         <input type="password" name="password" class="form-control form-control-user" placeholder="รหัสผ่าน">
                                     </div>
+                                    @if(session()->has('success') && !session()->pull('success'))
+                                        <div>
+                                            <div class="text-center d-inline-block" style="color: red">
+                                                {{session()->pull('message','เกิดข้อผิดพลาด')}}
+                                            </div>
+                                        </div>
+                                    @endif
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
                                         Login
                                     </button>
