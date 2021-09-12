@@ -98,15 +98,15 @@ class BMIController extends Controller
         foreach ($personnel_report as $key => $row) {
             $value = $row->bmi;
             if ($value < 18.5) {
-                $student_list_bmi['bmi_1']++;
+                $personnel_list_bmi['bmi_1']++;
             } else if ($value >= 18.5 && $value <= 22.9) {
-                $student_list_bmi['bmi_2']++;
+                $personnel_list_bmi['bmi_2']++;
             } else if ($value >= 23 && $value <= 24.9) {
-                $student_list_bmi['bmi_3']++;
+                $personnel_list_bmi['bmi_3']++;
             } else if ($value >= 25 && $value <= 29.9) {
-                $student_list_bmi['bmi_4']++;
+                $personnel_list_bmi['bmi_4']++;
             } else if ($value >= 30) {
-                $student_list_bmi['bmi_5']++;
+                $personnel_list_bmi['bmi_5']++;
             }
         }
         $report_3 = DB::table('bmi')
@@ -116,6 +116,12 @@ class BMIController extends Controller
             ->orderBy('count','desc')
             ->limit(5)
             ->get();
+        $report_3_count = DB::table('bmi')
+            ->selectRaw('count(hw_name) as count')
+            ->join('hardware', 'hardware.hw_id', '=', 'bmi.hw_id')
+            ->orderBy('count','desc')
+            ->limit(5)
+            ->first();
         $report_4 = [
           'student' => $student_list_bmi['count'],
           'personnel' => $personnel_list_bmi['count'],
@@ -142,6 +148,7 @@ class BMIController extends Controller
             'student' => $student_list_bmi,
             'personnel' => $personnel_list_bmi,
             'report_3' => $report_3,
+            'report_3_count' => $report_3_count->count,
             'report_4' => $report_4,
             'report_5' => $report_5,
         ]);
