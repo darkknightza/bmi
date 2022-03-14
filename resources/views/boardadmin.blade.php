@@ -49,13 +49,13 @@
                         <div class="col-lg-6 offset-3">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">แก้ไขสถานที่</h1>
+                                    <h1 class="h4 text-gray-900 mb-4">@{{ location_id > 0 ? "แก้ไขสถานที่" :  "เพิ่มสถานที่" }}</h1>
                                 </div>
                                 <form>
                                     @csrf
                                     <div class="form-group">
-                                        <label>ชื่อสถานที่ </label>
-                                        <input type="text" class="form-control" placeholder="ชื่อสถานที่"
+                                        <label>ชั้นที่ </label>
+                                        <input type="text" class="form-control" placeholder="ชั้นที่"
                                                v-model="location.board_name">
                                     </div>
                                     <div class="form-group">
@@ -98,7 +98,8 @@
           status_id: '',
           board_name: '',
           board_id: '',
-          list_key_status: []
+          list_key_status: [],
+          location_id: 0,
         },
         created: function () {
           this.getLocation();
@@ -123,6 +124,7 @@
           },
           editLocation(id) {
             let that = this;
+            this.location_id = id;
             this.show_edit_location = true;
             this.table_location = false;
             let data = null;
@@ -138,6 +140,7 @@
               });
           },
           AddLocation(){
+            this.location_id = 0;
             this.show_edit_location = true;
             this.table_location = false;
             this.location = {
