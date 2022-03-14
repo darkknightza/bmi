@@ -353,6 +353,9 @@ class BMIController extends Controller
             ->orderBy('time_update', 'desc')
             ->get();
         $status = false;
+        foreach ($result as $value){
+            $value->bmi_criterion = $this->BMICriterion($value->bmi);
+        }
         if ($result) {
             $status = true;
         }

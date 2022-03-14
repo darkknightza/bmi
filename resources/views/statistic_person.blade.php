@@ -12,6 +12,7 @@
                     <th>น้ำหนัก</th>
                     <th>ส่วนสูง</th>
                     <th>ค่า BMI</th>
+                    <th>มาตราฐาน</th>
                     <th>เวลา</th>
                 </tr>
                 </thead>
@@ -21,6 +22,7 @@
                     <td>@{{ list.weight }}</td>
                     <td>@{{ list.height }}</td>
                     <td>@{{ list.bmi }}</td>
+                    <td>@{{ list.bmi_criterion }}</td>
                     <td>@{{ list.time_update }}</td>
                 </tr>
                 </tbody>
