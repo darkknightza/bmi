@@ -1753,13 +1753,13 @@ __webpack_require__.r(__webpack_exports__);
       var label = '';
 
       if (this.selected === 'height') {
-        label = 'ส่วนสูง';
+        label = 'ส่วนสูง (ซม.)';
         data = this.data_chart.height;
       } else if (this.selected === 'weight') {
-        label = 'น้ำหนัก';
+        label = 'น้ำหนัก (กก.)';
         data = this.data_chart.weight;
       } else if (this.selected === 'bmi') {
-        label = 'BMI';
+        label = 'BMI (กก./ม.^2)';
         data = this.data_chart.bmi;
       }
 

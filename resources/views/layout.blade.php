@@ -52,13 +52,14 @@
       <div class="sidebar-heading">
         Menu
       </div>
-      <li class="nav-item">
-        <a class="nav-link" href="/">
-          <i class="fas fa-fw fa-chart-line"></i>
-          <span>รายงาน</span>
-        </a>
-      </li>
+
       @if(Auth::User()->user_type_id != 1)
+        <li class="nav-item">
+          <a class="nav-link" href="/">
+            <i class="fas fa-fw fa-chart-line"></i>
+            <span>สถิติของคุณ</span>
+          </a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="/location">
             <i class="fas fa-fw fa-chart-area"></i>
@@ -68,11 +69,17 @@
         <li class="nav-item">
           <a class="nav-link" href="/statistic_person">
             <i class="fas fa-fw fa-table"></i>
-            <span>สถิติของคุณ</span>
+            <span>รายงาน</span>
           </a>
         </li>
       @endif
       @if(Auth::User()->user_type_id == 1)
+        <li class="nav-item">
+          <a class="nav-link" href="/">
+            <i class="fas fa-fw fa-chart-line"></i>
+            <span>สถิติภาพรวม</span>
+          </a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="/hardware-admin">
             <i class="fas fa-fw fa-building"></i>
@@ -100,7 +107,7 @@
         <li class="nav-item">
           <a class="nav-link" href="/statistic_overview">
             <i class="fas fa-fw fa-table"></i>
-            <span>สถิติภาพรวม</span>
+            <span>รายงาน</span>
           </a>
         </li>
     @endif

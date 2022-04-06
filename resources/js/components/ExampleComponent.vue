@@ -51,13 +51,13 @@
         let data = []
         let label = ''
         if(this.selected === 'height'){
-          label = 'ส่วนสูง'
+          label = 'ส่วนสูง (ซม.)'
           data = this.data_chart.height
         }else if(this.selected === 'weight'){
-          label = 'น้ำหนัก'
+          label = 'น้ำหนัก (กก.)'
           data = this.data_chart.weight
         }else if(this.selected === 'bmi'){
-          label = 'BMI'
+          label = 'BMI (กก./ม.^2)'
           data = this.data_chart.bmi
         }
         var ctx = document.getElementById('lineChart').getContext('2d')
